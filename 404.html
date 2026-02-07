@@ -4,20 +4,1243 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FriendsConnect - Premium Social Platform</title>
-    
-    <!-- External CSS Files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="frontend/style.css">
-    <link rel="stylesheet" href="frontend/responsive.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script src="main.js" defer></script>
+    <script src="server.js" defer></script>
+
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #818cf8;
+            --secondary: #10b981;
+            --accent: #f43f5e;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+            --success: #10b981;
+            --dark: #0f172a;
+            --darker: #020617;
+            --light: #f8fafc;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --border-radius: 12px;
+            --border-radius-sm: 8px;
+            --border-radius-lg: 16px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 15px 30px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-accent: linear-gradient(135deg, #f43f5e 0%, #f97316 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: var(--gray-100);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Premium Header */
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            gap: 24px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo i {
+            font-size: 32px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 14px 52px 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.6);
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            color: var(--gray-100);
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: rgba(30, 41, 59, 0.9);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray-400);
+            cursor: pointer;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .search-bar button:hover {
+            color: var(--primary);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 16px;
+            margin-left: auto;
+        }
+
+        .nav-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--border-radius);
+            background: rgba(30, 41, 59, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-300);
+            text-decoration: none;
+            position: relative;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .nav-icon:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .nav-icon.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--dark);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+
+        .user-menu:hover {
+            background: rgba(30, 41, 59, 0.9);
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            background: var(--gradient-primary);
+            color: white;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: var(--shadow);
+        }
+
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-status {
+            font-size: 12px;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--success);
+        }
+
+        /* Main Layout */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr 340px;
+            gap: 24px;
+            padding: 24px 0;
+            min-height: calc(100vh - 68px);
+        }
+
+        /* Premium Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 92px;
+            height: calc(100vh - 116px);
+            overflow-y: auto;
+            padding-right: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar-section {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius-lg);
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--gray-300);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-title i {
+            color: var(--primary);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--gray-300);
+            transition: var(--transition);
+            margin-bottom: 6px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateX(4px);
+        }
+
+        .menu-item.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .menu-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius);
+            background: rgba(30, 41, 59, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-300);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .menu-item.active .menu-icon {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .menu-item:hover .menu-icon {
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--primary);
+        }
+
+        .shortcut-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 6px;
+        }
+
+        .shortcut-item:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateX(4px);
+        }
+
+        .shortcut-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: var(--shadow);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Premium Create Post */
+        .create-post {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .create-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .post-input {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .post-input input {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            color: var(--gray-100);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .post-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .post-input input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .post-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .post-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: var(--border-radius);
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid transparent;
+            font-weight: 500;
+        }
+
+        .post-action:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            border-color: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Premium Posts */
+        .post {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: var(--border-radius-lg);
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+            margin-bottom: 24px;
+            animation: fadeIn 0.5s ease-out;
+            transition: var(--transition);
+        }
+
+        .post:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl), 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .post-author {
+            flex: 1;
+        }
+
+        .post-author h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .post-time {
+            font-size: 13px;
+            color: var(--gray-400);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .post-content {
+            margin-bottom: 20px;
+        }
+
+        .post-text {
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.7;
+            color: var(--gray-200);
+        }
+
+        .post-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .post-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+            cursor: zoom-in;
+        }
+
+        .post-image:hover img {
+            transform: scale(1.02);
+        }
+
+        .post-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-400);
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            color: var(--primary);
+        }
+
+        .post-actions-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 8px 0;
+            gap: 4px;
+        }
+
+        .post-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: var(--border-radius);
+            color: var(--gray-300);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .post-action-btn:hover {
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .post-action-btn.active {
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* Comments */
+        .comments-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment-input {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .comment-input input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 50px;
+            font-size: 14px;
+            color: var(--gray-100);
+            border: 1px solid transparent;
+            transition: var(--transition);
+        }
+
+        .comment-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 1);
+        }
+
+        .comment {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .comment-content {
+            flex: 1;
+            background: rgba(30, 41, 59, 0.6);
+            padding: 16px;
+            border-radius: var(--border-radius-lg);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comment-content::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 16px;
+            width: 16px;
+            height: 16px;
+            background: inherit;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+        }
+
+        .comment-author {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 6px;
+            color: var(--primary-light);
+        }
+
+        .comment-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: var(--gray-200);
+            line-height: 1.6;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--gray-400);
+        }
+
+        .comment-action {
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .comment-action:hover {
+            color: var(--primary);
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            position: sticky;
+            top: 92px;
+            height: calc(100vh - 116px);
+            overflow-y: auto;
+        }
+
+        /* Friend Requests */
+        .friend-request {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: var(--border-radius);
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .friend-request:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .friend-info {
+            flex: 1;
+        }
+
+        .friend-info h4 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .friend-mutual {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-bottom: 12px;
+        }
+
+        .friend-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.8);
+            color: var(--gray-200);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(30, 41, 59, 1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--gradient-success);
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-danger {
+            background: var(--gradient-accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 63, 94, 0.4);
+        }
+
+        /* Events */
+        .event-item {
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .event-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .event-date {
+            display: inline-block;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .event-item h4 {
+            font-size: 15px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .event-details {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--gray-400);
+            margin-bottom: 12px;
+        }
+
+        /* Premium Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            animation: modalFadeIn 0.3s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            border-radius: var(--border-radius-lg);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl), 0 0 100px rgba(99, 102, 241, 0.2);
+            animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-30px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+        }
+
+        .modal-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            padding: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .close-modal {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 20px;
+            color: var(--gray-300);
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background: var(--gradient-accent);
+            color: white;
+            transform: rotate(90deg);
+            border-color: transparent;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gray-200);
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: var(--border-radius);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            color: var(--gray-100);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 1);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.95) 100%);
+            color: var(--gray-100);
+            padding: 20px;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-xl);
+            z-index: 3000;
+            display: none;
+            max-width: 400px;
+            animation: notificationSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid var(--success);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes notificationSlideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .notification.error {
+            border-left-color: var(--accent);
+        }
+
+        .notification.warning {
+            border-left-color: var(--warning);
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 280px 1fr;
+            }
+            
+            .right-sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar, .right-sidebar {
+                display: none;
+            }
+            
+            .nav-icons {
+                display: none;
+            }
+            
+            .user-info {
+                display: none;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 5px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: var(--shadow-xl);
+            z-index: 100;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Online Status */
+        .online-status {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--success);
+            border-radius: 50%;
+            border: 2px solid var(--dark);
+        }
+
+        .offline {
+            background: var(--gray-500);
+        }
+
+        /* Premium Tooltip */
+        [data-tooltip] {
+            position: relative;
+        }
+
+        [data-tooltip]::before {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: rgba(15, 23, 42, 0.95);
+            color: white;
+            font-size: 12px;
+            border-radius: var(--border-radius-sm);
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [data-tooltip]:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-8px);
+        }
+    </style>
 </head>
 <body>
-    <!-- Header Section -->
+    <!-- Header -->
     <header class="header">
-        <!-- Header content from previous HTML -->
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fas fa-sparkles"></i>
+                <span>FriendsConnect Pro</span>
+            </a>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search friends, posts, or groups..." id="searchInput">
+                <button type="button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            
+            <div class="nav-icons">
+                <a href="#" class="nav-icon active" id="homeBtn" data-tooltip="Home">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="#" class="nav-icon" id="friendsBtn" data-tooltip="Friends">
+                    <i class="fas fa-user-friends"></i>
+                </a>
+                <a href="#" class="nav-icon" id="messagesBtn" data-tooltip="Messages">
+                    <i class="fas fa-comments"></i>
+                    <span class="notification-badge" id="messageBadge">3</span>
+                </a>
+                <a href="#" class="nav-icon" id="notificationsBtn" data-tooltip="Notifications">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge">5</span>
+                </a>
+                <a href="#" class="nav-icon" id="discoverBtn" data-tooltip="Discover">
+                    <i class="fas fa-compass"></i>
+                </a>
+            </div>
+            
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatar">JS</div>
+                <div class="user-info">
+                    <div class="user-name">John Smith</div>
+                    <div class="user-status">
+                        <span class="status-dot"></span>
+                        <span>Online</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
     </header>
 
     <!-- Main Layout -->
@@ -25,17 +1248,202 @@
         <div class="main-layout">
             <!-- Left Sidebar -->
             <aside class="sidebar">
-                <!-- Sidebar content -->
+                <div class="sidebar-section">
+                    <nav>
+                        <a href="#" class="menu-item active" id="newsFeedBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span>News Feed</span>
+                        </a>
+                        <a href="#" class="menu-item" id="friendsMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-user-friends"></i>
+                            </div>
+                            <span>Friends</span>
+                            <span class="notification-badge" style="position: static; margin-left: auto;">2</span>
+                        </a>
+                        <a href="#" class="menu-item" id="messagesMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <span>Messages</span>
+                        </a>
+                        <a href="#" class="menu-item" id="eventsMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-calendar-star"></i>
+                            </div>
+                            <span>Events</span>
+                        </a>
+                        <a href="#" class="menu-item" id="photosMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-images"></i>
+                            </div>
+                            <span>Photos</span>
+                        </a>
+                        <a href="#" class="menu-item" id="groupsMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span>Groups</span>
+                        </a>
+                        <a href="#" class="menu-item" id="watchMenuBtn">
+                            <div class="menu-icon">
+                                <i class="fas fa-play-circle"></i>
+                            </div>
+                            <span>Watch</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-rocket"></i>
+                        Your Shortcuts
+                    </h3>
+                    <div class="shortcut-item" id="gamingShortcut">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <span>Gaming Hub</span>
+                    </div>
+                    <div class="shortcut-item" id="watchShortcut">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <span>Video Premium</span>
+                    </div>
+                    <div class="shortcut-item" id="marketplaceShortcut">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <span>Marketplace</span>
+                    </div>
+                    <div class="shortcut-item" id="memoriesShortcut">
+                        <div class="shortcut-icon">
+                            <i class="fas fa-history"></i>
+                        </div>
+                        <span>Memories</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-user-plus"></i>
+                        Friend Requests
+                    </h3>
+                    <div id="friendRequestsList">
+                        <!-- Friend requests will be loaded here -->
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" id="viewAllRequestsBtn">
+                        <i class="fas fa-eye"></i>
+                        View All Requests
+                    </button>
+                </div>
             </aside>
 
             <!-- Main Content -->
             <main class="main-content">
-                <!-- Create Post & Posts Feed -->
+                <!-- Create Post -->
+                <div class="create-post">
+                    <div class="post-input">
+                        <div class="user-avatar" style="width: 48px; height: 48px; font-size: 18px;">JS</div>
+                        <input type="text" id="postText" placeholder="What's on your mind, John?">
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action" id="addPhotoBtn">
+                            <i class="fas fa-image" style="color: var(--success);"></i>
+                            <span>Photo/Video</span>
+                        </div>
+                        <div class="post-action" id="tagFriendsBtn">
+                            <i class="fas fa-user-tag" style="color: var(--primary);"></i>
+                            <span>Tag Friends</span>
+                        </div>
+                        <div class="post-action" id="createPostBtn">
+                            <i class="fas fa-feather-alt" style="color: var(--warning);"></i>
+                            <span>Create Post</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Posts Feed -->
+                <div id="postsFeed">
+                    <!-- Posts will be loaded here -->
+                </div>
             </main>
 
             <!-- Right Sidebar -->
             <aside class="right-sidebar">
-                <!-- Right sidebar content -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-birthday-cake"></i>
+                        Birthdays
+                    </h3>
+                    <div class="friend-request">
+                        <div class="user-avatar" style="position: relative;">
+                            SK
+                            <div class="online-status"></div>
+                        </div>
+                        <div class="friend-info">
+                            <h4>Sarah Kim</h4>
+                            <p class="friend-mutual">🎂 Tomorrow</p>
+                            <div class="friend-actions">
+                                <button class="btn btn-primary btn-sm" id="birthdayPostBtn1">
+                                    <i class="fas fa-gift"></i> Post
+                                </button>
+                                <button class="btn btn-secondary btn-sm" id="birthdayMessageBtn1">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="friend-request">
+                        <div class="user-avatar" style="position: relative;">
+                            MB
+                            <div class="online-status offline"></div>
+                        </div>
+                        <div class="friend-info">
+                            <h4>Mike Brown</h4>
+                            <p class="friend-mutual">🎉 In 3 days</p>
+                            <div class="friend-actions">
+                                <button class="btn btn-primary btn-sm" id="birthdayPostBtn2">
+                                    <i class="fas fa-gift"></i> Post
+                                </button>
+                                <button class="btn btn-secondary btn-sm" id="birthdayMessageBtn2">
+                                    <i class="fas fa-envelope"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Upcoming Events
+                    </h3>
+                    <div id="eventsList">
+                        <!-- Events will be loaded here -->
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 12px;" id="createEventBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        Create Event
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-circle text-success"></i>
+                        Online Friends
+                    </h3>
+                    <div id="onlineFriends">
+                        <!-- Online friends will be loaded here -->
+                    </div>
+                    <button class="btn btn-secondary" style="width: 100%; margin-top: 12px;" id="findFriendsBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Find Friends
+                    </button>
+                </div>
             </aside>
         </div>
     </div>
@@ -45,12 +1453,185 @@
         <i class="fas fa-plus"></i>
     </button>
 
-    <!-- Modal Elements -->
-    <!-- All modals from previous HTML -->
+    <!-- Modals -->
+    <!-- Create Post Modal -->
+    <div id="createPostModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> Create Post</h3>
+                <button class="close-modal" id="closePostModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="post-input" style="margin-bottom: 24px;">
+                    <div class="user-avatar" style="width: 48px; height: 48px; font-size: 18px;">JS</div>
+                    <div>
+                        <h4 style="font-size: 16px; font-weight: 700;">John Smith</h4>
+                        <select class="form-control" id="postPrivacy" style="padding: 8px 16px; font-size: 13px; width: auto; margin-top: 4px;">
+                            <option value="public">🌐 Public</option>
+                            <option value="friends">👥 Friends</option>
+                            <option value="onlyme">🔒 Only me</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="modalPostText" placeholder="What's on your mind?" rows="5"></textarea>
+                </div>
+                <div class="form-group">
+                    <div id="postPreview" style="display: none; position: relative;">
+                        <img id="postImagePreview" style="width: 100%; border-radius: var(--border-radius); margin-bottom: 12px;">
+                        <button class="btn btn-danger btn-sm" id="removeImageBtn" style="position: absolute; top: 12px; right: 12px;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div style="border: 2px dashed rgba(255, 255, 255, 0.2); border-radius: var(--border-radius); padding: 24px; text-align: center; margin-bottom: 24px;">
+                    <i class="fas fa-plus-circle" style="font-size: 32px; color: var(--primary); margin-bottom: 12px;"></i>
+                    <p style="color: var(--gray-400); margin-bottom: 16px; font-size: 14px;">Add to your post</p>
+                    <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" id="addPhotoModalBtn">
+                            <i class="fas fa-image"></i> Photo/Video
+                        </button>
+                        <button class="btn btn-secondary" id="tagFriendsModalBtn">
+                            <i class="fas fa-user-tag"></i> Tag Friends
+                        </button>
+                        <button class="btn btn-secondary" id="addFeelingBtn">
+                            <i class="fas fa-smile"></i> Feeling
+                        </button>
+                        <button class="btn btn-secondary" id="addLocationBtn">
+                            <i class="fas fa-map-marker-alt"></i> Location
+                        </button>
+                    </div>
+                    <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelPostBtn">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" id="publishPostBtn">
+                    <i class="fas fa-paper-plane"></i> Publish
+                </button>
+            </div>
+        </div>
+    </div>
 
-    <!-- Notification Element -->
+    <!-- Friend Requests Modal -->
+    <div id="friendRequestsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Friend Requests</h3>
+                <button class="close-modal" id="closeRequestsModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="allFriendRequests">
+                    <!-- All friend requests will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="closeRequestsBtn">
+                    <i class="fas fa-check"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tag Friends Modal -->
+    <div id="tagFriendsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-tag"></i> Tag Friends</h3>
+                <button class="close-modal" id="closeTagModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="friendSearchInput" placeholder="Search friends...">
+                </div>
+                <div id="friendsToTag" style="max-height: 300px; overflow-y: auto;">
+                    <!-- Friends list for tagging -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelTagBtn">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" id="doneTagBtn">
+                    <i class="fas fa-check"></i> Done
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="createEventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-plus"></i> Create Event</h3>
+                <button class="close-modal" id="closeEventModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <div class="form-group">
+                        <label for="eventTitle"><i class="fas fa-heading"></i> Event Title</label>
+                        <input type="text" class="form-control" id="eventTitle" placeholder="What's the event?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDate"><i class="fas fa-calendar-day"></i> Date & Time</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <input type="date" class="form-control" id="eventDate" required>
+                            <input type="time" class="form-control" id="eventTime" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventLocation"><i class="fas fa-map-marker-alt"></i> Location</label>
+                        <input type="text" class="form-control" id="eventLocation" placeholder="Where is the event?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventDescription"><i class="fas fa-align-left"></i> Description</label>
+                        <textarea class="form-control" id="eventDescription" rows="4" placeholder="Tell people about the event..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="eventPrivacy"><i class="fas fa-lock"></i> Privacy</label>
+                        <select class="form-control" id="eventPrivacy">
+                            <option value="public">🌐 Public Event</option>
+                            <option value="friends">👥 Friends Only</option>
+                            <option value="invite">🎫 Invite Only</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelEventBtn">
+                    <i class="fas fa-times"></i> Cancel
+                </button>
+                <button class="btn btn-primary" id="saveEventBtn">
+                    <i class="fas fa-calendar-check"></i> Create Event
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Viewer Modal -->
+    <div id="imageViewerModal" class="modal">
+        <div class="modal-content" style="max-width: 90%; max-height: 90%; background: transparent; box-shadow: none;">
+            <button class="close-modal" id="closeImageViewer" style="position: absolute; top: -50px; right: 0; background: var(--gradient-accent);">
+                &times;
+            </button>
+            <img id="fullSizeImage" style="width: 100%; height: auto; border-radius: var(--border-radius-lg);">
+            <div style="color: white; text-align: center; margin-top: 16px;">
+                <h4 id="imageAuthor"></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
     <div id="notification" class="notification">
-        <!-- Notification content -->
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <i class="fas fa-check-circle" id="notificationIcon" style="font-size: 24px;"></i>
+            <div>
+                <h4 id="notificationTitle" style="font-size: 16px; margin-bottom: 4px;">Success</h4>
+                <p id="notificationMessage" style="font-size: 14px; color: var(--gray-400);">Action completed</p>
+            </div>
+        </div>
     </div>
 
     
@@ -65,6 +1646,10 @@
     <script src="frontend/js/events.js"></script>
     <script src="frontend/js/main.js"></script>
     
-   
+<script>
+    window.FriendsConnect = new FriendsConnectClient();
+</script>
+
+    
 </body>
-</html>
+</html> 
