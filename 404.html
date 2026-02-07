@@ -1635,21 +1635,24 @@
     </div>
 
     
-    <script src="utils.js"></script>
+ <script src="utils.js"></script>
+    <script src="main.js"></script>
     <script src="ui.js"></script>
+    <script src="notification.js"></script>  <!-- Add this -->
     <script src="modals.js"></script>
-    <script src="notifications.js"></script>
-    <script src="auth.js"></script>
     <script src="posts.js"></script>
     <script src="friends.js"></script>
     <script src="messages.js"></script>
-    <script src="events.js"></script>
-    <script src="main.js"></script>
+    <script src="events.js"></script>  <!-- Only once! -->
     
-<script>
-    window.FriendsConnect = new FriendsConnectClient();
-</script>
-
+    <script>
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.FriendsConnect) {
+                window.FriendsConnect.init();
+            }
+        });
+    </script>
     
 </body>
 </html> 
